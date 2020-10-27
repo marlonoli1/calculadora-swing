@@ -1,0 +1,101 @@
+// Aluno: Marlon Oliveira da Luz
+package Programa;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+import java.awt.Toolkit;
+
+// Definimos a classe Inicial que herda todos os atributos de um JFrame
+@SuppressWarnings("serial")
+public class Inicial extends JFrame {
+
+	// Definimos o componente de JPanel a ser usado em nosso JFrame
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	// Definindo o método main que irá executar a JFrame
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Inicial frame = new Inicial();
+					frame.setVisible(true);
+					frame.setResizable(false);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	// Aqui criamos o método construtor do nosso JFrame
+	public Inicial() {
+		// Definimos a imagem de icone da janela
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("imagens/info.png")));
+		
+		// Definimos o título da janela
+		setTitle("Sobre");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 300, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		// Definimos um Label com o nome do criador do programa
+		JLabel lblCriador = new JLabel("Criador: Marlon Oliveira da Luz");
+		lblCriador.setFont(new Font("Arial", Font.BOLD, 14));
+		lblCriador.setBounds(10, 36, 230, 14);
+		contentPane.add(lblCriador);
+		
+		// Definimos um Label com a turma do criador do programa
+		JLabel lblTurma = new JLabel("Turma: GTI_BN201");
+		lblTurma.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblTurma.setBounds(10, 61, 200, 16);
+		contentPane.add(lblTurma);
+		
+		// Definimos um Label com o nome do programa
+		JLabel lblTitulo = new JLabel("Projeto de Calculadora");
+		lblTitulo.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 14));
+		lblTitulo.setBounds(70, 11, 155, 14);
+		contentPane.add(lblTitulo);
+		
+		// Definimos um Label avisando ao usuário que se clicando no botão abaixo se abre a calculadora
+		JLabel lblBotao = new JLabel("Clique no Botão abaixo para abrir a Calculadora");
+		lblBotao.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblBotao.setBounds(10, 88, 264, 16);
+		contentPane.add(lblBotao);
+		
+		// Criamos um botão com icone de imagem para abrir o programa da calculadora
+		ImageIcon simboloCalc = new ImageIcon(getClass().getResource("imagens/calculadora.png"));
+		simboloCalc.setImage(simboloCalc.getImage().getScaledInstance(128, 128, 1));
+		JButton btnCalculadora = new JButton(simboloCalc);
+		btnCalculadora.setBackground(Color.WHITE);
+		btnCalculadora.setBounds(68, 108, 142, 142);
+		btnCalculadora.setFocusable(false);
+		contentPane.add(btnCalculadora);
+		btnCalculadora.addActionListener(ACTION -> {
+			Calculadora tela2 = new Calculadora();
+			
+			// Com o dispose fechamos esta janela para abrirmos a janela da calculadora
+			this.dispose();
+			tela2.setVisible(true);
+			tela2.setResizable(false);
+		});
+		
+	}
+
+}

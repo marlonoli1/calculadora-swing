@@ -1,0 +1,341 @@
+// Aluno: Marlon Oliveira da Luz
+package Programa;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
+// Definimos uma classe para a calculadora que herdara todos os atributos de um JFrame
+@SuppressWarnings("serial")
+public class Calculadora extends JFrame {
+
+	// Definimos os Componentes a serem utilizados no Jframe
+	private JPanel contentPane;
+	private JLabel exibirCalculo;
+	private JTextField textField;
+	private JButton btApagar;
+	private JButton btResetar;
+	private JButton btSomar;
+	private JButton btSubtrair;
+	private JButton btMultiplicar;
+	private JButton btDividir;
+	private JButton btPonto;
+	private JButton btIgual;
+	private JButton btRaiz;
+	private JButton btPot;
+	private JButton btDec;
+	private JButton btTs;
+	private JButton info;
+	private JButton btNum0;
+	private JButton btNum1;
+	private JButton btNum2;
+	private JButton btNum3;
+	private JButton btNum4;
+	private JButton btNum5;
+	private JButton btNum6;
+	private JButton btNum7;
+	private JButton btNum8;
+	private JButton btNum9;
+	
+	double num, resp;
+	int calculo;
+	
+	/**
+	 * Launch the application.
+	 */
+	// Definindo o método main que irá executar a JFrame
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Calculadora frame = new Calculadora();
+					frame.setVisible(true);
+					frame.setResizable(false);
+					frame.setTitle("Calculadora");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	// Definindo um metodo com um switch que vai capturar as operações aritméticas de uma calculadora
+	public void operacao() {
+		switch(calculo) {
+			case 1: // Soma
+				resp = num + Double.parseDouble(textField.getText());
+				textField.setText(Double.toString(resp));
+				break;
+			
+			case 2: // Subtração
+				resp = num - Double.parseDouble(textField.getText());
+				textField.setText(Double.toString(resp));
+				break;
+				
+			case 3: // Multiplicação
+				resp = num * Double.parseDouble(textField.getText());
+				textField.setText(Double.toString(resp));
+				break;
+			
+			case 4: // Divisão
+				resp = num / Double.parseDouble(textField.getText());
+				textField.setText(Double.toString(resp));
+				break;
+				
+			case 5: // Raiz
+				num = Double.parseDouble(textField.getText());
+				
+				resp = Math.sqrt(num);
+				textField.setText(Double.toString(resp));
+				break;
+			
+			case 6: // Potência
+				num = Double.parseDouble(textField.getText());
+				
+				resp = num * num;
+				textField.setText(Double.toString(resp));
+				break;
+				
+			case 7: // Decima parte
+				num = Double.parseDouble(textField.getText());
+				
+				resp = 1 / num;
+				textField.setText(Double.toString(resp));
+				break;
+			
+			case 8: // Inverter sinal
+				num = Double.parseDouble(textField.getText());
+				
+				resp = -num;
+				textField.setText(Double.toString(resp));
+				break;
+		}
+	}
+	
+	/**
+	 * Create the frame.
+	 */
+	// Aqui definimos o método construtor do nosso JFrame
+	public Calculadora() {
+		// Definimos a imagem de icone da janela
+		ImageIcon icone = new ImageIcon(getClass().getResource("imagens/calculadora.png"));
+		setIconImage(icone.getImage());
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 350, 450);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		// Definimos um TextField que vai funcionar como se fosse a tela da calculadora e vai exibir os numeros e operações
+		textField = new JTextField();
+		textField.setFont(new Font("Arial", Font.BOLD, 24));
+		textField.setHorizontalAlignment(JTextField.RIGHT);
+		textField.setBackground(Color.WHITE);
+		textField.setEnabled(true);
+		textField.setEditable(false);
+		textField.setBounds(10, 35, 314, 50);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		// Definimos um botão para apagar os numeros digitados pelo usuário do textfield, esse botão recebe um icone(imagem)
+		ImageIcon bsIcon = new ImageIcon(getClass().getResource("imagens/backspace.png"));
+		btApagar = new JButton(bsIcon);
+		btApagar.setBounds(254, 96, 70, 40);
+		btApagar.setBackground(Color.WHITE);
+		contentPane.add(btApagar);
+		btApagar.addActionListener(ACTION -> {
+			
+			int tamanho = textField.getText().length();
+			int indice = textField.getText().length() - 1;
+			String armazena;
+			
+			if (tamanho > 0) {
+				StringBuilder apagar = new StringBuilder(textField.getText());
+				apagar.deleteCharAt(indice);
+				armazena = apagar.toString();
+				textField.setText(armazena);
+			}
+		});
+		
+		// Definimos um botão C que reseta a operação aritmética iniciada pelo usuário
+		btResetar = new JButton("C");
+		btResetar.setBounds(174, 96, 70, 40);
+		btResetar.setFont(new Font("Arial", Font.BOLD, 18));
+		btResetar.setBackground(Color.WHITE);
+		contentPane.add(btResetar);
+		btResetar.addActionListener(ActionListener -> {
+			calculo = 0;
+			textField.setText(null);
+			exibirCalculo.setText(null);
+		});
+		
+		// Definimos um botão que vai apagar o ultimo numero digitado pelo usuário em uma operação aritmética
+		btResetar = new JButton("CE");
+		btResetar.setBounds(94, 96, 70, 40);
+		btResetar.setFont(new Font("Arial", Font.BOLD, 18));
+		btResetar.setBackground(Color.WHITE);
+		contentPane.add(btResetar);
+		btResetar.addActionListener(ActionListener -> {
+			textField.setText("");
+		});
+		
+		// Definimos um botão com icone de imagem, para calcular raiz quadrada de um numero
+		ImageIcon raizIcon = new ImageIcon(getClass().getResource("imagens/raizquadrada.png"));
+		raizIcon.setImage(raizIcon.getImage().getScaledInstance(28, 20, 1));
+		btRaiz = new JButton(raizIcon);
+		btRaiz.setBounds(174, 147, 70, 40);
+		btRaiz.setFont(new Font("Arial", Font.BOLD, 18));
+		btRaiz.setBackground(Color.WHITE);
+		contentPane.add(btRaiz);
+		btRaiz.addActionListener(ActionListener -> {
+			calculo = 5;
+			exibirCalculo.setText("sqrt(" + textField.getText() + ")");
+			operacao();
+		});
+		
+		// Definimos um botão com icone de imagem, para calcular a potência de um numero
+		ImageIcon potIcon = new ImageIcon(getClass().getResource("imagens/potencia.png"));
+		potIcon.setImage(potIcon.getImage().getScaledInstance(16, 16, 1));
+		btPot = new JButton(potIcon);
+		btPot.setBounds(94, 147, 70, 40);
+		btPot.setFont(new Font("Arial", Font.BOLD, 18));
+		btPot.setBackground(Color.WHITE);
+		contentPane.add(btPot);
+		btPot.addActionListener(ActionListener -> {
+			calculo = 6;
+			exibirCalculo.setText(textField.getText() + "²");
+			operacao();
+		});
+		
+		// Definimos um botão com icone de imagem, para calcular a divisão de 1 pelo numero digitado
+		ImageIcon decIcon = new ImageIcon(getClass().getResource("imagens/1x.png"));
+		decIcon.setImage(decIcon.getImage().getScaledInstance(32, 32, 1));
+		btDec = new JButton(decIcon);
+		btDec.setBounds(14, 147, 70, 40);
+		btDec.setFont(new Font("Arial", Font.BOLD, 18));
+		btDec.setBackground(Color.WHITE);
+		contentPane.add(btDec);
+		btDec.addActionListener(ActionListener -> {
+			calculo = 7;
+			exibirCalculo.setText("1/(" + textField.getText() + ")");
+			operacao();
+		});
+		
+		// Definimos um botão com icone de imagem, para trocar o sinal de um numero informado pelo usuário
+		ImageIcon tsIcon = new ImageIcon(getClass().getResource("imagens/+-.png"));
+		tsIcon.setImage(tsIcon.getImage().getScaledInstance(48, 48, 1));
+		btTs = new JButton(tsIcon);
+		btTs.setBounds(14, 96, 70, 40);
+		btTs.setFont(new Font("Arial", Font.BOLD, 18));
+		btTs.setBackground(Color.WHITE);
+		contentPane.add(btTs);
+		btTs.addActionListener(ActionListener -> {
+			calculo = 8;
+			operacao();
+		});
+		
+		// Utilizamos um método para definir os  botões de algumas operações aritméticas
+		botaoOperacao(btSomar, "+", 254, 303, 70, 40);
+		botaoOperacao(btSubtrair, "-", 254, 252, 70, 40);
+		botaoOperacao(btMultiplicar, "*", 254, 199, 70, 40);
+		botaoOperacao(btDividir, "/", 254, 147, 70, 40);
+		
+		// Tambem utilizamos um método para definir os botões da calculadora
+		botaoNumero(btPonto, ".", 94, 354, 70, 40);
+		botaoNumero(btNum0, "0", 14, 354, 70, 40);
+		botaoNumero(btNum1, "1", 14, 303, 70, 40);
+		botaoNumero(btNum2, "2", 94, 303, 70, 40);
+		botaoNumero(btNum3, "3", 174, 303, 70, 40);
+		botaoNumero(btNum4, "4", 14, 252, 70, 40);
+		botaoNumero(btNum5, "5", 94, 252, 70, 40);
+		botaoNumero(btNum6, "6", 174, 252, 70, 40);
+		botaoNumero(btNum7, "7", 14, 200, 70, 40);
+		botaoNumero(btNum8, "8", 94, 200, 70, 40);
+		botaoNumero(btNum9, "9", 174, 200, 70, 40);
+		
+		// Definimos o botão Igual para encerrar uma operação aritmética
+		btIgual = new JButton("=");
+		btIgual.setBounds(174, 354, 150, 40);
+		btIgual.setFont(new Font("Arial", Font.BOLD, 18));
+		btIgual.setBackground(Color.WHITE);
+		btIgual.addActionListener(ACTION -> {
+			operacao();
+			exibirCalculo.setText("");
+		});
+		contentPane.add(btIgual);
+		
+		// Definimos um Label para receber uma parte de uma operação aritmética, caso a mesma receba 2 numeros
+		exibirCalculo = new JLabel("");
+		exibirCalculo.setForeground(Color.DARK_GRAY);
+		exibirCalculo.setFont(new Font("Arial", Font.PLAIN, 14));
+		exibirCalculo.setBounds(254, 11, 70, 14);
+		contentPane.add(exibirCalculo);
+		
+		// Definimos um botão para exibir a janela com as informações sobre o nosso projeto
+		ImageIcon icon = new ImageIcon(getClass().getResource("imagens/info.png"));
+		icon.setImage(icon.getImage().getScaledInstance(16, 16, 1));
+		info = new JButton(icon);
+		info.setBackground(Color.WHITE);
+		info.setBounds(10, 5, 25, 25);
+		contentPane.add(info);
+		info.setFocusable(false);
+		info.addActionListener(ACTION -> {
+			Inicial tela1 = new Inicial();
+			
+			this.dispose();
+			tela1.setVisible(true);
+			tela1.setResizable(false);
+		});
+	}
+	
+	// Definimos um método para criação dos botões dos numeros da calculadora que recebe diversos parametros
+	public void botaoNumero(JButton botao, String texto, int x, int y, int larg, int alt) {
+		botao = new JButton(texto);
+		botao.setBounds(x, y, larg, alt);
+		botao.setFont(new Font("Arial", Font.BOLD, 18));
+		botao.setBackground(Color.WHITE);
+		contentPane.add(botao);
+		botao.addActionListener(ACTION -> {
+			textField.setText(textField.getText() + texto);
+		});
+	}
+
+	// Definimos um método para criação dos botões das operações da calculadora que também recebe diversos parametros
+	public void botaoOperacao(JButton botao, String operador, int x, int y, int larg, int alt) {
+		botao = new JButton(operador);
+		botao.setBounds(x, y, larg, alt);
+		botao.setFont(new Font("Arial", Font.BOLD, 18));
+		botao.setBackground(Color.WHITE);
+		botao.addActionListener(ACTION -> {
+			num = Double.parseDouble(textField.getText());
+			// Dentro do metodo dizemos que dependendo da String digitada como operador do botão ele vai chamar tal operação
+			if (operador.equalsIgnoreCase("+")) {
+				calculo = 1;
+				textField.setText("");
+				exibirCalculo.setText(num + " + ");
+			} else if (operador.equalsIgnoreCase("-")) {
+				calculo = 2;
+				textField.setText("");
+				exibirCalculo.setText(num + " - ");
+			} else if (operador.equalsIgnoreCase("*")) {
+				calculo = 3;
+				textField.setText("");
+				exibirCalculo.setText(num + " * ");
+			} else if (operador.equalsIgnoreCase("/")) {
+				calculo = 4;
+				textField.setText("");
+				exibirCalculo.setText(num + " / ");
+			} 
+		});
+		contentPane.add(botao);
+	}
+}
